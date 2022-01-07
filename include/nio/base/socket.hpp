@@ -20,10 +20,6 @@ namespace nio {
 				close(sock);
 			}
 
-			virtual ~_sock() {
-				shutdown();
-			}
-
 			protected:
 			int sock;
 		};
