@@ -37,7 +37,9 @@ or if you prefer dynamic linking:
 
 target_link_libraries(<Your target> NioShared)
 
+...
+```
+
 By default it builds the static version of the library, `libnio.a`. If you need the shared object version, simply append to you CMake flags: `-DNIO_BUILD_SHARED=ON`.
 
 All of the header files needed are in `nio/include/`, I would recommend leaving them there for easy upgrades.
-```
