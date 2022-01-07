@@ -1,0 +1,70 @@
+#pragma once
+
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <string.h>
+#include <sys/socket.h>
+
+#include <string>
+
+#include "nio/base/addr.hpp"
+
+namespace nio {
+	namespace ip {
+		namespace v4 {
+			class addr : public base::addr<sockaddr_in> {
+				public:
+				addr();
+
+				/**
+				 * @brief Create a new addr object the represents the endpoint
+				 * _ip:_port
+				 *
+				 * @param _ip
+				 * @param _port
+				 */
+				addr(const std::string& _ip, in_port_t _port);
+
+				/**
+				 * @brief Get the IP address.
+				 *
+				 * @return std::string
+				 */
+				inline std::string ip() const {
+					return inet_ntoa(saddr.sin_addr);
+				}
+
+				/**
+				 * @brief Set the IP address.
+				 *
+				 * @param _ip
+				 */
+				inline void ip(const std::string& _ip) {
+					saddr.sin_addr.s_addr = inet_addr(_ip.c_str());
+				}
+
+				/**
+				 * @brief Get the port number.
+				 *
+				 * @return in_port_t
+				 */
+				inline in_port_t port() const {
+					return ntohs(saddr.sin_port);
+				}
+
+				/**
+				 * @brief Set the port number.
+				 *
+				 * @param _port
+				 */
+				inline void port(in_port_t _port) {
+					saddr.sin_port = htons(_port);
+				}
+
+				inline operator sockaddr_in*() {
+					return &saddr;
+				}
+			};
+		} // namespace v4
+	}	  // namespace ip
+} // namespace nio
