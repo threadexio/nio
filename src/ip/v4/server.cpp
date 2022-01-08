@@ -13,12 +13,18 @@ namespace nio {
 				srv = _srv;
 			}
 
-			Result<void*, Error> server::Bind() {
+			Result<void*, Error> server::Create() {
 				Result<void*, Error> ret;
 
 				sock = socket(AF_INET, SOCK_STREAM, 0);
 				if (sock < 0)
 					return std::move(ret.Err(errno));
+
+				return std::move(ret.Ok(nullptr));
+			}
+
+			Result<void*, Error> server::Bind() {
+				Result<void*, Error> ret;
 
 				if (bind(sock, srv, srv) < 0)
 					return std::move(ret.Err(errno));

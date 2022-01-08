@@ -34,6 +34,13 @@ namespace nio {
 			}
 
 			/**
+			 * @brief Create the client socket.
+			 *
+			 * @return Result<E, Error> - Check this for error handling
+			 */
+			virtual Result<void*, Error> Create() = 0;
+
+			/**
 			 * @brief Connect to a remote endpoint.
 			 *
 			 * @return Result<E, Error> - Check this for error handling

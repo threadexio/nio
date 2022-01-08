@@ -15,12 +15,19 @@ namespace nio {
 				remote = _remote;
 			}
 
-			Result<stream, Error> client::Connect() {
-				Result<stream, Error> ret;
+			Result<void*, Error> client::Create() {
+				Result<void*, Error> ret;
 
 				sock = socket(AF_INET, SOCK_STREAM, 0);
+				if (sock < 0)
+					return std::move(ret.Err(errno));
 
-				addr peer;
+				return std::move(ret.Ok(nullptr));
+			}
+
+			Result<stream, Error> client::Connect() {
+				Result<stream, Error> ret;
+				addr				  peer;
 
 				if (connect(sock, remote, remote) < 0)
 					return std::move(ret.Err(errno));

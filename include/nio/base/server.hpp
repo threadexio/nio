@@ -35,6 +35,13 @@ namespace nio {
 			}
 
 			/**
+			 * @brief Create the server socket.
+			 *
+			 * @return Result<void*, Error> - Check this for error handling
+			 */
+			virtual Result<void*, Error> Create() = 0;
+
+			/**
 			 * @brief Bind to the server address.
 			 *
 			 * @return Result<void*, Error> - Check this for error handling

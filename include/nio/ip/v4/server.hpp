@@ -21,8 +21,15 @@ namespace nio {
 				server(const addr& _server);
 
 				/**
+				 * @brief Create the server socket. Should be called after the
+				 * constructor.
+				 *
+				 * @return Result<void*, Error> - Check this for error handling
+				 */
+				Result<void*, Error> Create();
+
+				/**
 				 * @brief Bind to the specified address and get ready to listen.
-				 * Should be called after the constructor.
 				 *
 				 * @return Result<void*, Error> - Check this for error handling
 				 */

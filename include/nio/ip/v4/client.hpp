@@ -22,6 +22,13 @@ namespace nio {
 				client(const addr& _remote);
 
 				/**
+				 * @brief Create the client socket.
+				 *
+				 * @return Result<stream, Error> - Check this for error handling
+				 */
+				Result<void*, Error> Create();
+
+				/**
 				 * @brief Connect to the endpoint specified.
 				 *
 				 * @return Result<stream, Error> - Check this for error handling
