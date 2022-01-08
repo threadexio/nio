@@ -23,12 +23,12 @@ namespace nio {
 				addr peer;
 
 				if (connect(sock, remote, remote) < 0)
-					return ret.Err(errno);
+					return std::move(ret.Err(errno));
 
 				if (getpeername(sock, peer, peer) < 0)
-					return ret.Err(errno);
+					return std::move(ret.Err(errno));
 
-				return ret.Ok(stream(sock, peer));
+				return std::move(ret.Ok(stream(sock, peer)));
 			}
 		} // namespace v4
 	}	  // namespace ip

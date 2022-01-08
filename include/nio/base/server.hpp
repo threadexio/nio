@@ -15,6 +15,25 @@ namespace nio {
 		template <class T, class E>
 		class server : public _sock {
 			public:
+			server() {
+			}
+
+			server(server&& other) noexcept {
+				srv		   = other.srv;
+				sock	   = other.sock;
+				other.sock = -1;
+			}
+
+			server& operator=(server&& other) noexcept {
+				if (this == &other)
+					return *this;
+
+				srv		   = other.srv;
+				sock	   = other.sock;
+				other.sock = -1;
+				return *this;
+			}
+
 			/**
 			 * @brief Bind to the server address.
 			 *

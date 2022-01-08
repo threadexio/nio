@@ -2,6 +2,8 @@
 
 #include <unistd.h>
 
+#include <iostream>
+
 namespace nio {
 	namespace base {
 		class _sock {
@@ -20,8 +22,12 @@ namespace nio {
 				close(sock);
 			}
 
+			virtual ~_sock() {
+				shutdown();
+			}
+
 			protected:
-			int sock;
+			int sock = -1;
 		};
 	} // namespace base
 } // namespace nio

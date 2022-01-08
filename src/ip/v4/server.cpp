@@ -18,21 +18,21 @@ namespace nio {
 
 				sock = socket(AF_INET, SOCK_STREAM, 0);
 				if (sock < 0)
-					return ret.Err(errno);
+					return std::move(ret.Err(errno));
 
 				if (bind(sock, srv, srv) < 0)
-					return ret.Err(errno);
+					return std::move(ret.Err(errno));
 
-				return ret.Ok(nullptr);
+				return std::move(ret.Ok(nullptr));
 			}
 
 			Result<void*, Error> server::Listen(int _queue) {
 				Result<void*, Error> ret;
 
 				if (listen(sock, _queue) < 0)
-					return ret.Err(errno);
+					return std::move(ret.Err(errno));
 
-				return ret.Ok(nullptr);
+				return std::move(ret.Ok(nullptr));
 			}
 
 			Result<stream, Error> server::Accept() {
@@ -41,9 +41,9 @@ namespace nio {
 				addr peer;
 				int	 new_stream = accept(sock, peer, peer);
 				if (new_stream < 0)
-					return ret.Err(errno);
+					return std::move(ret.Err(errno));
 
-				return ret.Ok(stream(new_stream, peer));
+				return std::move(ret.Ok(stream(new_stream, peer)));
 			}
 		} // namespace v4
 	}	  // namespace ip

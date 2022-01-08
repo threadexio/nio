@@ -15,6 +15,24 @@ namespace nio {
 		template <class T, class E>
 		class client : public _sock {
 			public:
+			client() {
+			}
+
+			client(client&& other) noexcept {
+				remote	   = other.remote;
+				sock	   = other.sock;
+				other.sock = -1;
+			}
+
+			client& operator=(client&& other) noexcept {
+				if (this == &other)
+					return *this;
+
+				remote	   = other.remote;
+				sock	   = other.sock;
+				other.sock = -1;
+			}
+
 			/**
 			 * @brief Connect to a remote endpoint.
 			 *

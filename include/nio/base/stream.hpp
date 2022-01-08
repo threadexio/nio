@@ -18,6 +18,26 @@ namespace nio {
 		template <class T>
 		class stream : public _sock {
 			public:
+			stream() {
+			}
+
+			stream(stream&& other) noexcept {
+				sock	   = other.sock;
+				_peer	   = other._peer;
+				other.sock = -1;
+			}
+
+			stream& operator=(stream&& other) noexcept {
+				if (this == &other)
+					return *this;
+
+				shutdown();
+				sock	   = other.sock;
+				_peer	   = other._peer;
+				other.sock = -1;
+				return *this;
+			}
+
 			/**
 			 * @brief Read from the stream _size bytes.
 			 *
@@ -32,11 +52,11 @@ namespace nio {
 
 				int read_bytes = recv(sock, buf.data(), _size, _flags);
 				if (read_bytes < 0)
-					return ret.Err(errno);
+					return std::move(ret.Err(errno));
 
 				buf.resize(read_bytes);
 
-				return ret.Ok(buf);
+				return std::move(ret.Ok(std::move(buf)));
 			}
 
 			/**
@@ -59,9 +79,9 @@ namespace nio {
 						 _flags);
 
 				if (written_bytes < 0)
-					return ret.Err(errno);
+					return std::move(ret.Err(errno));
 
-				return ret.Ok(written_bytes);
+				return std::move(ret.Ok(written_bytes));
 			}
 
 			/**
