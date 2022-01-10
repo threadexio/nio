@@ -10,10 +10,11 @@ option(NIO_BUILD_SHARED "Build a shared library too" OFF)
 
 #==========================#
 
+include_directories(include/)
+
 file(GLOB_RECURSE NIO_SRC "src/*.cpp")
 
 add_library(NioMain OBJECT ${NIO_SRC})
-target_include_directories(NioMain PRIVATE include/)
 set_target_properties(NioMain PROPERTIES POSITION_INDEPENDENT_CODE 1)
 
 add_library(NioStatic STATIC)
