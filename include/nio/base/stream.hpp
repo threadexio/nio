@@ -1,9 +1,9 @@
 #pragma once
 
+#include <errno.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
-#include "nio/buffer.hpp"
 #include "nio/error.hpp"
 #include "socket.hpp"
 
@@ -45,18 +45,16 @@ namespace nio {
 			 * @param _flags Special recv() flags. See `man 3 recv`
 			 * @return Result<buffer, Error> - Check this for error handling
 			 */
-			Result<buffer, Error> read(size_t _size, int _flags = 0) {
-				Result<buffer, Error> ret;
+			Result<void*, Error> read(char*	 _buf,
+									  size_t _size,
+									  int	 _flags = 0) {
+				Result<void*, Error> ret;
 
-				buffer buf(_size);
-
-				int read_bytes = recv(sock, buf.data(), _size, _flags);
+				int read_bytes = recv(sock, _buf, _size, _flags);
 				if (read_bytes < 0)
 					return std::move(ret.Err(errno));
 
-				buf.resize(read_bytes);
-
-				return std::move(ret.Ok(std::move(buf)));
+				return std::move(ret.Ok(std::move(_buf)));
 			}
 
 			/**
@@ -67,16 +65,12 @@ namespace nio {
 			 * @param _flags Special send() flags. See `man 3 send`
 			 * @return Result<size_t, Error> - Check this for error handling
 			 */
-			Result<size_t, Error> write(const buffer& _data,
-										size_t		  _len	 = 0,
-										int			  _flags = 0) {
+			Result<size_t, Error> write(const char* _data,
+										size_t		_len,
+										int			_flags = 0) {
 				Result<size_t, Error> ret;
 
-				ssize_t written_bytes =
-					send(sock,
-						 _data.data(),
-						 (_len == 0) ? _data.length() : _len,
-						 _flags);
+				ssize_t written_bytes = send(sock, _data, _len, _flags);
 
 				if (written_bytes < 0)
 					return std::move(ret.Err(errno));

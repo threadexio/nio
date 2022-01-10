@@ -20,9 +20,6 @@ add_library(NioStatic STATIC)
 target_link_libraries(NioStatic NioMain)
 set_target_properties(NioStatic PROPERTIES OUTPUT_NAME nio)
 
-# Add to the global include dirs the library's headers
-include_directories(include/)
-
 #==========================#
 
 if(NIO_BUILD_SHARED)
