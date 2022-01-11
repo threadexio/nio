@@ -11,7 +11,7 @@ namespace nio {
 			/**
 			 * @brief An IPv4 client.
 			 */
-			class client : public base::client<addr, stream> {
+			class client final : public base::client<addr, stream> {
 				public:
 				/**
 				 * @brief Create a new IPv4 client which will connect to

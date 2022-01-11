@@ -12,7 +12,7 @@ namespace nio {
 	 * @tparam _E Type of the error
 	 */
 	template <typename _T, typename _E>
-	class Result {
+	class Result final {
 		private:
 		bool _fail;
 
@@ -55,7 +55,7 @@ namespace nio {
 		}
 	};
 
-	struct Error {
+	struct Error final {
 		int			no;
 		const char* msg;
 

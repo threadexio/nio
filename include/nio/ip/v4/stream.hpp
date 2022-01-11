@@ -10,7 +10,7 @@ namespace nio {
 			 * @brief An IPv4 connection stream. Do not use this directly,
 			 * unless absolutely needed.
 			 */
-			class stream : public base::stream<addr> {
+			class stream final : public base::stream<addr> {
 				public:
 				stream() {
 				}

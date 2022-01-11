@@ -12,7 +12,7 @@
 namespace nio {
 	namespace ip {
 		namespace v4 {
-			class addr : public base::addr<sockaddr_in> {
+			class addr final : public base::addr<sockaddr_in> {
 				public:
 				addr();
 

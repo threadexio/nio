@@ -9,14 +9,14 @@ namespace nio {
 			/**
 			 * @brief Get the underlying socket file descriptor.
 			 */
-			int raw() const {
+			inline int raw() const {
 				return sock;
 			}
 
 			/**
 			 * @brief Cleanup the socket.
 			 */
-			virtual void shutdown() {
+			virtual inline void shutdown() {
 				close(sock);
 			}
 

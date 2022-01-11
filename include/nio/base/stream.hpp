@@ -47,7 +47,7 @@ namespace nio {
 			 */
 			Result<void*, Error> read(char*	 _buf,
 									  size_t _size,
-									  int	 _flags = 0) {
+									  int	 _flags = 0) const {
 				Result<void*, Error> ret;
 
 				int read_bytes = recv(sock, _buf, _size, _flags);
@@ -83,7 +83,7 @@ namespace nio {
 			 *
 			 * @return const T&
 			 */
-			const T& peer() const {
+			inline const T& peer() const {
 				return _peer;
 			};
 
