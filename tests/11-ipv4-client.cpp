@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "catch.hpp"
+#include "nio/ip/stream.hpp"
 #include "nio/ip/v4/client.hpp"
 
 #define IP	 "127.0.0.24"

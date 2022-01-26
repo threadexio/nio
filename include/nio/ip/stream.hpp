@@ -9,7 +9,7 @@ namespace nio {
 		 * @brief A type representing all IP streams.
 		 *
 		 */
-		class stream : public base::stream<sockaddr> {};
+		using stream = base::stream;
 
 	} // namespace ip
 } // namespace nio

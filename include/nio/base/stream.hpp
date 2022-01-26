@@ -10,34 +10,8 @@
 namespace nio {
 	namespace base {
 
-		/**
-		 * @brief Base class for any stream
-		 *
-		 * @tparam T Type of the corresponding addr class
-		 */
-		template <class T>
 		class stream : public _sock {
 			public:
-			stream() {
-			}
-
-			stream(stream&& other) noexcept {
-				sock	   = other.sock;
-				_peer	   = other._peer;
-				other.sock = -1;
-			}
-
-			stream& operator=(stream&& other) noexcept {
-				if (this == &other)
-					return *this;
-
-				shutdown();
-				sock	   = other.sock;
-				_peer	   = other._peer;
-				other.sock = -1;
-				return *this;
-			}
-
 			/**
 			 * @brief Read from the stream _size bytes.
 			 *
@@ -76,6 +50,35 @@ namespace nio {
 					return std::move(ret.Err(errno));
 
 				return std::move(ret.Ok(written_bytes));
+			}
+		};
+
+		/**
+		 * @brief Base class for any stream
+		 *
+		 * @tparam T Type of the corresponding addr class
+		 */
+		template <class T>
+		class _stream : public stream {
+			public:
+			_stream() {
+			}
+
+			_stream(_stream&& other) noexcept {
+				sock	   = other.sock;
+				_peer	   = other._peer;
+				other.sock = -1;
+			}
+
+			_stream& operator=(_stream&& other) noexcept {
+				if (this == &other)
+					return *this;
+
+				shutdown();
+				sock	   = other.sock;
+				_peer	   = other._peer;
+				other.sock = -1;
+				return *this;
 			}
 
 			/**
