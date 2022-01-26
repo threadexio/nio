@@ -26,7 +26,7 @@ namespace nio {
 				 *
 				 * @return Result<void*, Error> - Check this for error handling
 				 */
-				Result<void*, Error> Create();
+				Result<void*, Error> Create(PROTOCOL prot = PROTOCOL::STREAM);
 
 				/**
 				 * @brief Bind to the specified address and get ready to listen.

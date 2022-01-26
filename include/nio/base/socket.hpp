@@ -10,6 +10,12 @@
 
 namespace nio {
 
+	enum class PROTOCOL {
+		STREAM	 = SOCK_STREAM,
+		DATAGRAM = SOCK_DGRAM,
+		RAW		 = SOCK_RAW
+	};
+
 	namespace base {
 		struct sock_opt {
 			int level;

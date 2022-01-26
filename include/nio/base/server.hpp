@@ -39,7 +39,8 @@ namespace nio {
 			 *
 			 * @return Result<void*, Error> - Check this for error handling
 			 */
-			virtual Result<void*, Error> Create() = 0;
+			virtual Result<void*, Error> Create(
+				PROTOCOL prot = PROTOCOL::STREAM) = 0;
 
 			/**
 			 * @brief Bind to the server address.

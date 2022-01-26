@@ -38,7 +38,8 @@ namespace nio {
 			 *
 			 * @return Result<E, Error> - Check this for error handling
 			 */
-			virtual Result<void*, Error> Create() = 0;
+			virtual Result<void*, Error> Create(
+				PROTOCOL prot = PROTOCOL::STREAM) = 0;
 
 			/**
 			 * @brief Connect to a remote endpoint.

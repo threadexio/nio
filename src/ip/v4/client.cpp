@@ -15,10 +15,10 @@ namespace nio {
 				remote = _remote;
 			}
 
-			Result<void*, Error> client::Create() {
+			Result<void*, Error> client::Create(PROTOCOL prot) {
 				Result<void*, Error> ret;
 
-				sock = socket(AF_INET, SOCK_STREAM, 0);
+				sock = socket(AF_INET, static_cast<int>(prot), 0);
 				if (sock < 0)
 					return std::move(ret.Err(errno));
 

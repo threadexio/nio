@@ -26,7 +26,7 @@ namespace nio {
 				 *
 				 * @return Result<stream, Error> - Check this for error handling
 				 */
-				Result<void*, Error> Create();
+				Result<void*, Error> Create(PROTOCOL prot = PROTOCOL::STREAM);
 
 				/**
 				 * @brief Connect to the endpoint specified.
