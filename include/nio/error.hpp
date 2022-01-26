@@ -79,7 +79,7 @@ namespace nio {
 		}
 
 		inline operator bool() {
-			return no == 0;
+			return no != 0;
 		}
 	};
 } // namespace nio

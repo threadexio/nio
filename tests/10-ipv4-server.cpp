@@ -14,6 +14,26 @@ TEST_CASE("nio::ip::v4::server tests", "[nio]") {
 		REQUIRE(false);
 	}
 
+	if (auto r = srv.set_opt(nio::SOPT::REUSE_ADDRESS, &nio::ENABLE)) {
+		std::cout << "set_opt(): " << r.Err().msg << "\n";
+		REQUIRE(false);
+	}
+
+	{
+		int ret;
+		if (auto r = srv.get_opt(nio::SOPT::REUSE_ADDRESS, &ret)) {
+			std::cout << "get_opt(REUSE_ADDRESS): " << r.Err().msg << "\n";
+			REQUIRE(false);
+		}
+		REQUIRE(ret == 1);
+
+		if (auto r = srv.get_opt(nio::SOPT::TYPE, &ret)) {
+			std::cout << "get_opt(TYPE): " << r.Err().msg << "\n";
+			REQUIRE(false);
+		}
+		REQUIRE(ret == SOCK_STREAM);
+	}
+
 	if (auto r = srv.Bind()) {
 		std::cout << "Bind(): " << r.Err().msg << "\n";
 		REQUIRE(false);
