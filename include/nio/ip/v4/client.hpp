@@ -24,16 +24,15 @@ namespace nio {
 				/**
 				 * @brief Create the client socket.
 				 *
-				 * @return Result<stream, Error> - Check this for error handling
 				 */
-				Result<void*, Error> Create(PROTOCOL prot = PROTOCOL::STREAM);
+				void create(protocol prot = protocol::STREAM);
 
 				/**
 				 * @brief Connect to the endpoint specified.
 				 *
-				 * @return Result<stream, Error> - Check this for error handling
+				 * @return stream - The new connection stream
 				 */
-				Result<stream, Error> Connect();
+				stream connect();
 			};
 		} // namespace v4
 	}	  // namespace ip

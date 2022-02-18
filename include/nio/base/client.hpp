@@ -36,17 +36,15 @@ namespace nio {
 			/**
 			 * @brief Create the client socket.
 			 *
-			 * @return Result<E, Error> - Check this for error handling
 			 */
-			virtual Result<void*, Error> Create(
-				PROTOCOL prot = PROTOCOL::STREAM) = 0;
+			virtual void create(protocol prot = protocol::STREAM) = 0;
 
 			/**
 			 * @brief Connect to a remote endpoint.
 			 *
-			 * @return Result<E, Error> - Check this for error handling
+			 * @return E - Stream type
 			 */
-			virtual Result<E, Error> Connect() = 0;
+			virtual E connect() = 0;
 
 			protected:
 			T remote;

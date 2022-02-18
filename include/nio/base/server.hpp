@@ -37,32 +37,27 @@ namespace nio {
 			/**
 			 * @brief Create the server socket.
 			 *
-			 * @return Result<void*, Error> - Check this for error handling
 			 */
-			virtual Result<void*, Error> Create(
-				PROTOCOL prot = PROTOCOL::STREAM) = 0;
+			virtual void create(protocol prot = protocol::STREAM) = 0;
 
 			/**
 			 * @brief Bind to the server address.
 			 *
-			 * @return Result<void*, Error> - Check this for error handling
 			 */
-			virtual Result<void*, Error> Bind() = 0;
+			virtual void bind() = 0;
 
 			/**
 			 * @brief Listen on the server address.
 			 *
 			 * @param _queue
-			 * @return Result<void*, Error> - Check this for error handling
 			 */
-			virtual Result<void*, Error> Listen(int _queue = 5) = 0;
+			virtual void listen(int _queue = 5) = 0;
 
 			/**
 			 * @brief Accept a new connection from the
 			 *
-			 * @return Result<void*, Error> - Check this for error handling
 			 */
-			virtual Result<E, Error> Accept() = 0;
+			virtual E accept() = 0;
 
 			protected:
 			T srv;

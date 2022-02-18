@@ -1,85 +1,65 @@
 #pragma once
 
-#include <algorithm>
 #include <cstring>
+#include <exception>
+#include <string>
+
+#define NIO_THROW_ERROR(type)			  throw type(__func__)
+#define NIO_THROW_ERROR_CUSTOM(type, err) throw type(__func__, err)
 
 namespace nio {
-	/**
-	 * @brief Simple type for error handling in return values. ("Inspired" by
-	 * Rust)
-	 *
-	 * @tparam _T Type of the value
-	 * @tparam _E Type of the error
-	 */
-	template <typename _T, typename _E>
-	class Result final {
-		private:
-		bool _fail;
 
-		_T ok;
-		_E err;
+	class error : public std::exception {
+		private:
+		// Error number
+		int m_errno = 0;
+
+		// Error description
+		const char* m_msg;
+
+		// Which system call failed
+		const char* m_call;
 
 		public:
-		Result() {};
-
-		[[nodiscard]] inline _T&& Ok() {
-			return std::move(ok);
+		explicit error(const char* _call, int _err = errno)
+			: m_errno(_err), m_call(_call), m_msg(std::strerror(_err)) {
 		}
 
-		[[nodiscard]] inline _E&& Err() {
-			return std::move(err);
+		virtual ~error() noexcept {
 		}
 
-		[[nodiscard]] inline Result<_T, _E>& Ok(_T&& _ok) {
-			_fail = false;
-			ok	  = std::move(_ok);
-			return *this;
+		/**
+		 * @brief Get the reason of failure.
+		 *
+		 * @return const char*
+		 */
+		const char* what() const noexcept {
+			return m_msg;
 		}
 
-		[[nodiscard]] inline Result<_T, _E>& Err(_E&& _err) {
-			_fail = true;
-			err	  = std::move(_err);
-			return *this;
+		/**
+		 * @brief Get which function call failed.
+		 *
+		 * @return const char*
+		 */
+		const char* which() const noexcept {
+			return m_call;
 		}
 
-		inline bool is_ok() const {
-			return ! _fail;
+		/**
+		 * @brief Get the error number.
+		 *
+		 * @return int
+		 */
+		int err() const noexcept {
+			return m_errno;
 		}
+	};
 
-		inline bool is_err() const {
-			return _fail;
-		}
-
-		inline operator bool() {
-			return is_err();
+	class io_error : public error {
+		public:
+		io_error(const char* _call) : error(_call) {
 		}
 	};
 
-	struct Error final {
-		int			no;
-		const char* msg;
-
-		Error() {};
-
-		Error(int _errno) : no(_errno), msg(strerror(no)) {
-		}
-
-		Error(Error&& other) noexcept {
-			no	= other.no;
-			msg = other.msg;
-		}
-
-		Error& operator=(Error&& other) noexcept {
-			if (this == &other)
-				return *this;
-
-			no	= other.no;
-			msg = other.msg;
-			return *this;
-		}
-
-		inline operator bool() {
-			return no != 0;
-		}
-	};
 } // namespace nio

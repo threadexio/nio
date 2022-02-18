@@ -30,7 +30,7 @@ namespace nio {
 				 *
 				 * @return std::string
 				 */
-				inline std::string ip() const {
+				inline std::string ip() const noexcept {
 					return inet_ntoa(saddr.sin_addr);
 				}
 
@@ -39,7 +39,7 @@ namespace nio {
 				 *
 				 * @param _ip
 				 */
-				inline void ip(const std::string& _ip) {
+				inline void ip(const std::string& _ip) noexcept {
 					saddr.sin_addr.s_addr = inet_addr(_ip.c_str());
 				}
 
@@ -48,7 +48,7 @@ namespace nio {
 				 *
 				 * @return in_port_t
 				 */
-				inline in_port_t port() const {
+				inline in_port_t port() const noexcept {
 					return ntohs(saddr.sin_port);
 				}
 
@@ -57,11 +57,11 @@ namespace nio {
 				 *
 				 * @param _port
 				 */
-				inline void port(in_port_t _port) {
+				inline void port(in_port_t _port) noexcept {
 					saddr.sin_port = htons(_port);
 				}
 
-				inline operator sockaddr_in*() {
+				inline operator sockaddr_in*() noexcept {
 					return &saddr;
 				}
 			};

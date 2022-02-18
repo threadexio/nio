@@ -13,43 +13,29 @@ namespace nio {
 				srv = _srv;
 			}
 
-			Result<void*, Error> server::Create(PROTOCOL prot) {
-				Result<void*, Error> ret;
-
+			void server::create(protocol prot) {
 				sock = socket(AF_INET, static_cast<int>(prot), 0);
 				if (sock < 0)
-					return std::move(ret.Err(errno));
-
-				return std::move(ret.Ok(nullptr));
+					NIO_THROW_ERROR(error);
 			}
 
-			Result<void*, Error> server::Bind() {
-				Result<void*, Error> ret;
-
-				if (bind(sock, srv, srv) < 0)
-					return std::move(ret.Err(errno));
-
-				return std::move(ret.Ok(nullptr));
+			void server::bind() {
+				if (::bind(sock, srv, srv) < 0)
+					NIO_THROW_ERROR(error);
 			}
 
-			Result<void*, Error> server::Listen(int _queue) {
-				Result<void*, Error> ret;
-
-				if (listen(sock, _queue) < 0)
-					return std::move(ret.Err(errno));
-
-				return std::move(ret.Ok(nullptr));
+			void server::listen(int _queue) {
+				if (::listen(sock, _queue) < 0)
+					NIO_THROW_ERROR(error);
 			}
 
-			Result<stream, Error> server::Accept() {
-				Result<stream, Error> ret;
-
+			stream server::accept() {
 				addr peer;
-				int	 new_stream = accept(sock, peer, peer);
+				int	 new_stream = ::accept(sock, peer, peer);
 				if (new_stream < 0)
-					return std::move(ret.Err(errno));
+					NIO_THROW_ERROR(error);
 
-				return std::move(ret.Ok(stream(new_stream, peer)));
+				return stream(new_stream, peer);
 			}
 		} // namespace v4
 	}	  // namespace ip

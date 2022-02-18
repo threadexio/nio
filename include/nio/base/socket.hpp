@@ -10,7 +10,7 @@
 
 namespace nio {
 
-	enum class PROTOCOL {
+	enum class protocol {
 		STREAM	 = SOCK_STREAM,
 		DATAGRAM = SOCK_DGRAM,
 		RAW		 = SOCK_RAW
@@ -44,7 +44,7 @@ namespace nio {
 	};
 
 	// Index of _sopts. Do not change the order.
-	enum class SOPT {
+	enum class option {
 		BROADCAST = 0,
 		DEBUG,
 		DONT_ROUTE,
@@ -72,42 +72,47 @@ namespace nio {
 			/**
 			 * @brief Get the underlying socket file descriptor.
 			 */
-			inline int raw() const {
+			inline int raw() const noexcept {
 				return sock;
 			}
 
 			/**
-			 * @brief Cleanup the socket.
+			 * @brief Destroy the socket.
 			 */
-			virtual inline void shutdown() {
-				close(sock);
+			virtual inline void close() noexcept {
+				::close(sock);
 			}
 
-			virtual ~_sock() {
-				shutdown();
+			virtual ~_sock() noexcept {
+				close();
 			}
 
-			Result<socklen_t, Error> get_opt(SOPT opt, void* val) const {
-				Result<socklen_t, Error> ret;
-
+			/**
+			 * @brief Get a socket option.
+			 *
+			 * @param opt Option @see nio::option
+			 * @param val Options value - Output parameter
+			 * @return socklen_t - Size of data in val
+			 */
+			socklen_t get_opt(option opt, void* val) const {
 				auto&	  sopt = _sopts[static_cast<int>(opt)];
 				socklen_t len  = sopt.len;
-				if (getsockopt(sock, sopt.level, sopt.optname, val, &len) < 0) {
-					return std::move(ret.Err(errno));
-				}
-				return std::move(ret.Ok(std::move(len)));
+				if (getsockopt(sock, sopt.level, sopt.optname, val, &len) < 0)
+					NIO_THROW_ERROR(error);
+				return len;
 			}
 
-			Result<void*, Error> set_opt(SOPT opt, const void* val) const {
-				Result<void*, Error> ret;
-
+			/**
+			 * @brief Set a socket option.
+			 *
+			 * @param opt Option @see nio::option
+			 * @param val
+			 */
+			void set_opt(option opt, const void* val) const {
 				auto& sopt = _sopts[static_cast<int>(opt)];
 				if (setsockopt(sock, sopt.level, sopt.optname, val, sopt.len) <
-					0) {
-					return std::move(ret.Err(errno));
-				}
-
-				return std::move(ret.Ok(nullptr));
+					0)
+					NIO_THROW_ERROR(error);
 			}
 
 			protected:

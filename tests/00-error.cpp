@@ -1,37 +1,42 @@
-#include <errno.h>
+#include <iostream>
 
 #include "catch.hpp"
 #include "nio/error.hpp"
 
-#define TEST_ERRNO(x)                                                          \
-	{                                                                          \
-		SECTION("Testing error " #x, "[nio]") {                                \
-			nio::Error error(x);                                               \
-			REQUIRE(error.no == x);                                            \
-			REQUIRE(error.msg == strerror(x));                                 \
-		}                                                                      \
-	}
+#define IP	 "127.0.0.24"
+#define PORT 8888
 
-static nio::Result<int, int> check(bool success) {
-	nio::Result<int, int> ret;
-	return (success) ? ret.Ok(0) : ret.Err(-1);
+void i_throw() {
+	NIO_THROW_ERROR(nio::error);
 }
 
-TEST_CASE("nio error handler tests", "[nio]") {
-	TEST_ERRNO(EPERM);
-	TEST_ERRNO(ENOENT);
-	TEST_ERRNO(ESRCH);
-	TEST_ERRNO(EINTR);
+void i_throw_io() {
+	NIO_THROW_ERROR(nio::io_error);
+}
 
-	SECTION("Test nio::Result", "[nio]") {
-		auto r = check(true);
-		REQUIRE(r.is_ok() == true);
-		REQUIRE(r.is_err() == false);
-		REQUIRE(r.Ok() == 0);
+void i_throw_custom() {
+	NIO_THROW_ERROR_CUSTOM(nio::error, -1);
+}
 
-		r = check(false);
-		REQUIRE(r.is_ok() == false);
-		REQUIRE(r.is_err() == true);
-		REQUIRE(r.Err() == -1);
+TEST_CASE("nio error handling tests", "[nio]") {
+	try {
+		i_throw_io();
+	} catch (const nio::io_error& e) {
+		REQUIRE(strcmp(e.which(), "i_throw_io") == 0);
+		REQUIRE(e.err() == 0);
+	}
+
+	try {
+		i_throw();
+	} catch (const nio::error& e) {
+		REQUIRE(strcmp(e.which(), "i_throw") == 0);
+		REQUIRE(e.err() == 0);
+	}
+
+	try {
+		i_throw_custom();
+	} catch (const nio::error& e) {
+		REQUIRE(strcmp(e.which(), "i_throw_custom") == 0);
+		REQUIRE(e.err() == -1);
 	}
 }

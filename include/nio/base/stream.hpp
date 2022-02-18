@@ -10,7 +10,7 @@
 namespace nio {
 	namespace base {
 
-		class stream : public _sock {
+		class _stream : public _sock {
 			public:
 			/**
 			 * @brief Read from the stream _size bytes.
@@ -19,16 +19,12 @@ namespace nio {
 			 * @param _flags Special recv() flags. See `man 3 recv`
 			 * @return Result<buffer, Error> - Check this for error handling
 			 */
-			Result<void*, Error> read(char*	 _buf,
-									  size_t _size,
-									  int	 _flags = 0) const {
-				Result<void*, Error> ret;
-
+			size_t read(char* _buf, size_t _size, int _flags = 0) const {
 				int read_bytes = recv(sock, _buf, _size, _flags);
 				if (read_bytes < 0)
-					return std::move(ret.Err(errno));
+					NIO_THROW_ERROR(io_error);
 
-				return std::move(ret.Ok(std::move(_buf)));
+				return read_bytes;
 			}
 
 			/**
@@ -39,17 +35,18 @@ namespace nio {
 			 * @param _flags Special send() flags. See `man 3 send`
 			 * @return Result<size_t, Error> - Check this for error handling
 			 */
-			Result<size_t, Error> write(const char* _data,
-										size_t		_len,
-										int			_flags = 0) {
-				Result<size_t, Error> ret;
-
+			size_t write(const char* _data, size_t _len, int _flags = 0) {
 				ssize_t written_bytes = send(sock, _data, _len, _flags);
 
 				if (written_bytes < 0)
-					return std::move(ret.Err(errno));
+					NIO_THROW_ERROR(io_error);
 
-				return std::move(ret.Ok(written_bytes));
+				return written_bytes;
+			}
+
+			inline _stream& operator<<(const char* _data) {
+				write(_data, strlen(_data));
+				return *this;
 			}
 		};
 
@@ -59,22 +56,24 @@ namespace nio {
 		 * @tparam T Type of the corresponding addr class
 		 */
 		template <class T>
-		class _stream : public stream {
+		class stream : public _stream {
 			public:
-			_stream() {
+			stream() {
 			}
 
-			_stream(_stream&& other) noexcept {
+			stream(const stream&) = delete;
+
+			stream(stream&& other) noexcept {
 				sock	   = other.sock;
 				_peer	   = other._peer;
 				other.sock = -1;
 			}
 
-			_stream& operator=(_stream&& other) noexcept {
+			stream& operator=(stream&& other) noexcept {
 				if (this == &other)
 					return *this;
 
-				shutdown();
+				close();
 				sock	   = other.sock;
 				_peer	   = other._peer;
 				other.sock = -1;

@@ -15,27 +15,22 @@ namespace nio {
 				remote = _remote;
 			}
 
-			Result<void*, Error> client::Create(PROTOCOL prot) {
-				Result<void*, Error> ret;
-
+			void client::create(protocol prot) {
 				sock = socket(AF_INET, static_cast<int>(prot), 0);
 				if (sock < 0)
-					return std::move(ret.Err(errno));
-
-				return std::move(ret.Ok(nullptr));
+					NIO_THROW_ERROR(error);
 			}
 
-			Result<stream, Error> client::Connect() {
-				Result<stream, Error> ret;
-				addr				  peer;
+			stream client::connect() {
+				addr peer;
 
-				if (connect(sock, remote, remote) < 0)
-					return std::move(ret.Err(errno));
+				if (::connect(sock, remote, remote) < 0)
+					NIO_THROW_ERROR(error);
 
 				if (getpeername(sock, peer, peer) < 0)
-					return std::move(ret.Err(errno));
+					NIO_THROW_ERROR(error);
 
-				return std::move(ret.Ok(stream(sock, peer)));
+				return std::move(stream(sock, peer));
 			}
 		} // namespace v4
 	}	  // namespace ip

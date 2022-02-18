@@ -24,32 +24,29 @@ namespace nio {
 				 * @brief Create the server socket. Should be called after the
 				 * constructor.
 				 *
-				 * @return Result<void*, Error> - Check this for error handling
 				 */
-				Result<void*, Error> Create(PROTOCOL prot = PROTOCOL::STREAM);
+				void create(protocol prot = protocol::STREAM);
 
 				/**
 				 * @brief Bind to the specified address and get ready to listen.
 				 *
-				 * @return Result<void*, Error> - Check this for error handling
 				 */
-				Result<void*, Error> Bind();
+				void bind();
 
 				/**
 				 * @brief Listen on the specified address and get ready to
 				 * accept incoming connections.
 				 *
 				 * @param _queue
-				 * @return Result<void*, Error> - Check this for error handling
 				 */
-				Result<void*, Error> Listen(int _queue = 5);
+				void listen(int _queue = 5);
 
 				/**
 				 * @brief Accept an incoming connection.
 				 *
-				 * @return Result<stream, Error> - Check this for error handling
+				 * @return stream - The new connection stream
 				 */
-				Result<stream, Error> Accept();
+				stream accept();
 			};
 		} // namespace v4
 	}	  // namespace ip
