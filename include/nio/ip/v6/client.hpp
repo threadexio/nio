@@ -14,7 +14,7 @@ namespace nio {
 			class client final : public base::client<addr, stream> {
 				public:
 				/**
-				 * @brief Create a new IPv4 client which will connect to
+				 * @brief Create a new IPv6 client which will connect to
 				 * _remote.
 				 *
 				 * @param _remote

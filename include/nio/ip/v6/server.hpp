@@ -9,12 +9,12 @@ namespace nio {
 	namespace ip {
 		namespace v6 {
 			/**
-			 * @brief An IPv4 server.
+			 * @brief An IPv6 server.
 			 */
 			class server final : public base::server<addr, stream> {
 				public:
 				/**
-				 * @brief Create a new IPv4 server that will listen on _server.
+				 * @brief Create a new IPv6 server that will listen on _server.
 				 *
 				 * @param _server
 				 */
