@@ -1,12 +1,12 @@
 <div align="center">
 
-# nio
-
-## Yet another C++ networking library
+<img src="assets/logo.svg" height=250>
 
 </div>
 
-<br>
+# nio
+
+Yet another stream based C++ networking library. For now it only supports \*nix systems, Windows support is planned.
 
 ## Features
 
