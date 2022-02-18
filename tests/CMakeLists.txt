@@ -6,6 +6,8 @@ set (TEST_TARGETS
 	11-ipv4-client
 	20-ipv6-server
 	21-ipv6-client
+	30-unx-server
+	31-unx-client
 )
 
 message(STATUS "nio: Enabled tests")

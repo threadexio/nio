@@ -59,6 +59,15 @@ namespace nio {
 			 */
 			virtual E accept() = 0;
 
+			/**
+			 * @brief Get the server's address.
+			 *
+			 * @return const T&
+			 */
+			const T& address() {
+				return srv;
+			}
+
 			protected:
 			T srv;
 		};

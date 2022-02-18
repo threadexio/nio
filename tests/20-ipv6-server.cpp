@@ -1,8 +1,8 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "nio/ip/stream.hpp"
 #include "nio/ip/v6/server.hpp"
+#include "nio/stream.hpp"
 
 #define IP	 "::1"
 #define PORT 8888

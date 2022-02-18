@@ -14,6 +14,8 @@ namespace nio {
 		namespace v6 {
 			class addr final : public base::addr<sockaddr_in6> {
 				public:
+				addr();
+
 				/**
 				 * @brief Create a new addr object the represents the endpoint
 				 * _ip:_port

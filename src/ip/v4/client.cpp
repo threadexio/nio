@@ -30,7 +30,7 @@ namespace nio {
 				if (getpeername(sock, peer, peer) < 0)
 					NIO_THROW_ERROR(error);
 
-				return std::move(stream(sock, peer));
+				return stream(sock, peer);
 			}
 		} // namespace v4
 	}	  // namespace ip

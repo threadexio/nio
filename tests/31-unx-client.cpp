@@ -1,29 +1,26 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "nio/ip/v6/client.hpp"
 #include "nio/stream.hpp"
+#include "nio/unx/client.hpp"
 
-#define IP	 "::1"
-#define PORT 8888
+#define PATH "/tmp/test.sock"
 
-TEST_CASE("nio::ip::v6::client tests", "[nio]") {
+TEST_CASE("nio::unx::client tests", "[nio]") {
 	try {
-		nio::ip::v6::client cli(nio::ip::v6::addr(IP, PORT));
+		nio::unx::client cli(nio::unx::addr(PATH));
 
 		cli.create();
 
-		nio::ip::v6::stream stream;
+		nio::unx::stream stream;
 		stream = cli.connect();
 
-		std::cout << "Server: " << stream.peer().ip() << ":"
-				  << stream.peer().port() << "\n";
+		std::cout << "Server: " << stream.peer().path() << "\n";
 
-		REQUIRE(stream.peer().ip() == IP);
+		REQUIRE(stream.peer().path() == PATH);
 
 		const char* testdata = "abcdefg\n\r\b\a!DSFDSW23423";
 
-		// stream.write(testdata, strlen(testdata));
 		stream << testdata;
 
 		std::unique_ptr<char[]> buf(new char[256]);

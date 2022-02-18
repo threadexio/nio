@@ -8,6 +8,12 @@
 
 <br>
 
+## Features
+
+-   IPv4
+-   IPv6
+-   Unix sockets
+
 ## Usage
 
 The library can be used in other projects via it's CMake integration. To put it siply, do some of this:
@@ -44,7 +50,7 @@ By default it builds the static version of the library, `libnio.a`. If you need 
 
 All of the header files needed are in `nio/include/`, I would recommend leaving them there for easy upgrades.
 
-# Code
+## Code
 
 To get started simply add the `include/` directory of the repo to your include paths and you can access everything in a structured format. Code namespaces correspond to directories and classes to files.
 

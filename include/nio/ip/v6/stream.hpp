@@ -12,6 +12,9 @@ namespace nio {
 			 */
 			class stream final : public base::stream<addr> {
 				public:
+				stream() {
+				}
+
 				/**
 				 * @brief Create a new IPv6 stream on _sock.
 				 *
