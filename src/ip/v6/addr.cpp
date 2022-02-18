@@ -34,8 +34,8 @@ namespace nio {
 				apparently this doesn't work otherwise. For the record I have
 				spent about an hour trying to understand why it didn't work.
 				*/
-				char buf[INET6_ADDRSTRLEN];
-				char i = 0;
+				char		  buf[INET6_ADDRSTRLEN];
+				unsigned char i = 0;
 				for (auto c : _ip) {
 					if (c >= 'A' && c <= 'Z')
 						c = c - ('Z' - 'z');
@@ -43,7 +43,7 @@ namespace nio {
 					i++;
 				}
 
-				switch (inet_pton(AF_INET6, _ip.c_str(), &saddr.sin6_addr)) {
+				switch (inet_pton(AF_INET6, buf, &saddr.sin6_addr)) {
 					case 1:
 						break;
 

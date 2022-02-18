@@ -22,11 +22,11 @@ namespace nio {
 
 		public:
 		explicit error(const char* _call)
-			: m_errno(errno), m_call(_call), m_msg(std::strerror(m_errno)) {
+			: m_errno(errno), m_msg(std::strerror(m_errno)), m_call(_call) {
 		}
 
 		explicit error(const char* _call, int _err, const char* _msg)
-			: m_errno(_err), m_call(_call), m_msg(_msg) {
+			: m_errno(_err), m_msg(_msg), m_call(_call) {
 		}
 
 		virtual ~error() noexcept {
