@@ -17,7 +17,7 @@ namespace nio {
 			 *
 			 * @param _size Number of bytes to read
 			 * @param _flags Special recv() flags. See `man 3 recv`
-			 * @return Result<buffer, Error> - Check this for error handling
+			 * @return size_t - Number of bytes read
 			 */
 			size_t read(char* _buf, size_t _size, int _flags = 0) const {
 				int read_bytes = recv(sock, _buf, _size, _flags);
@@ -33,7 +33,7 @@ namespace nio {
 			 * @param _data The data to write
 			 * @param _len Size of the data (in bytes), 0 means the whole buffer
 			 * @param _flags Special send() flags. See `man 3 send`
-			 * @return Result<size_t, Error> - Check this for error handling
+			 * @return size_t - Number of bytes written
 			 */
 			size_t write(const char* _data, size_t _len, int _flags = 0) {
 				ssize_t written_bytes = send(sock, _data, _len, _flags);
