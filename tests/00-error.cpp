@@ -15,7 +15,7 @@ void i_throw_io() {
 }
 
 void i_throw_custom() {
-	NIO_THROW_ERROR_CUSTOM(nio::error, -1);
+	NIO_THROW_ERROR_CUSTOM(nio::error, -1, "Custom error message");
 }
 
 TEST_CASE("nio error handling tests", "[nio]") {

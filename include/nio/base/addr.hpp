@@ -4,6 +4,8 @@
 
 #include <string>
 
+#include "nio/error.hpp"
+
 namespace nio {
 	namespace base {
 
@@ -20,14 +22,14 @@ namespace nio {
 			 *
 			 * @return std::string
 			 */
-			virtual std::string ip() const noexcept = 0;
+			virtual std::string ip() const = 0;
 
 			/**
 			 * @brief Set the address from a string.
 			 *
 			 * @param _ip
 			 */
-			virtual void ip(const std::string& _ip) noexcept = 0;
+			virtual void ip(const std::string& _ip) = 0;
 
 			/**
 			 * @brief Get the port number.

@@ -2,18 +2,18 @@
 
 #include "catch.hpp"
 #include "nio/ip/stream.hpp"
-#include "nio/ip/v4/client.hpp"
+#include "nio/ip/v6/client.hpp"
 
-#define IP	 "127.0.0.24"
+#define IP	 "::1"
 #define PORT 8888
 
-TEST_CASE("nio::ip::v4::client tests", "[nio]") {
+TEST_CASE("nio::ip::v6::client tests", "[nio]") {
 	try {
-		nio::ip::v4::client cli(nio::ip::v4::addr(IP, PORT));
+		nio::ip::v6::client cli(nio::ip::v6::addr(IP, PORT));
 
 		cli.create();
 
-		nio::ip::v4::stream stream;
+		nio::ip::v6::stream stream;
 		stream = cli.connect();
 
 		std::cout << "Server: " << stream.peer().ip() << ":"

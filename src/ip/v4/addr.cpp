@@ -15,6 +15,19 @@ namespace nio {
 				ip(_ip);
 				port(_port);
 			}
+
+			std::string addr::ip() const {
+				char _ip[INET_ADDRSTRLEN] = {0};
+				if (inet_ntop(AF_INET, &saddr.sin_addr, _ip, INET_ADDRSTRLEN) ==
+					NULL)
+					NIO_THROW_ERROR(error);
+				return _ip;
+			}
+
+			void addr::ip(const std::string& _ip) {
+				if (inet_pton(AF_INET, _ip.c_str(), &saddr.sin_addr) != 1)
+					NIO_THROW_ERROR(error);
+			}
 		} // namespace v4
 	}	  // namespace ip
 } // namespace nio

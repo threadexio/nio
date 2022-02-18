@@ -24,6 +24,7 @@ set_target_properties(NioStatic PROPERTIES OUTPUT_NAME nio)
 #==========================#
 
 if(NIO_BUILD_SHARED)
+	message(STATUS "nio: Building shared library")
 	add_library(NioShared SHARED)
 	target_link_libraries(NioShared NioMain)
 	set_target_properties(NioShared PROPERTIES OUTPUT_NAME nio)

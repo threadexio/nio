@@ -4,8 +4,8 @@
 #include <exception>
 #include <string>
 
-#define NIO_THROW_ERROR(type)			  throw type(__func__)
-#define NIO_THROW_ERROR_CUSTOM(type, err) throw type(__func__, err)
+#define NIO_THROW_ERROR(type)				   throw type(__func__)
+#define NIO_THROW_ERROR_CUSTOM(type, err, msg) throw type(__func__, err, msg)
 
 namespace nio {
 
@@ -21,8 +21,12 @@ namespace nio {
 		const char* m_call;
 
 		public:
-		explicit error(const char* _call, int _err = errno)
-			: m_errno(_err), m_call(_call), m_msg(std::strerror(_err)) {
+		explicit error(const char* _call)
+			: m_errno(errno), m_call(_call), m_msg(std::strerror(m_errno)) {
+		}
+
+		explicit error(const char* _call, int _err, const char* _msg)
+			: m_errno(_err), m_call(_call), m_msg(_msg) {
 		}
 
 		virtual ~error() noexcept {

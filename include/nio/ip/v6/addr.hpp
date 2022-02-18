@@ -11,8 +11,8 @@
 
 namespace nio {
 	namespace ip {
-		namespace v4 {
-			class addr final : public base::addr<sockaddr_in> {
+		namespace v6 {
+			class addr final : public base::addr<sockaddr_in6> {
 				public:
 				addr();
 
@@ -45,7 +45,7 @@ namespace nio {
 				 * @return in_port_t
 				 */
 				inline in_port_t port() const noexcept {
-					return ntohs(saddr.sin_port);
+					return ntohs(saddr.sin6_port);
 				}
 
 				/**
@@ -54,13 +54,13 @@ namespace nio {
 				 * @param _port
 				 */
 				inline void port(in_port_t _port) noexcept {
-					saddr.sin_port = htons(_port);
+					saddr.sin6_port = htons(_port);
 				}
 
-				inline operator sockaddr_in*() noexcept {
+				inline operator sockaddr_in6*() noexcept {
 					return &saddr;
 				}
 			};
-		} // namespace v4
+		} // namespace v6
 	}	  // namespace ip
 } // namespace nio

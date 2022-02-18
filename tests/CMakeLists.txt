@@ -4,6 +4,8 @@ set (TEST_TARGETS
 	00-error
 	10-ipv4-server
 	11-ipv4-client
+	20-ipv6-server
+	21-ipv6-client
 )
 
 message(STATUS "nio: Enabled tests")

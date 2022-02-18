@@ -2,14 +2,14 @@
 
 #include "catch.hpp"
 #include "nio/ip/stream.hpp"
-#include "nio/ip/v4/server.hpp"
+#include "nio/ip/v6/server.hpp"
 
-#define IP	 "127.0.0.24"
+#define IP	 "::1"
 #define PORT 8888
 
-TEST_CASE("nio::ip::v4::server tests", "[nio]") {
+TEST_CASE("nio::ip::v6::server tests", "[nio]") {
 	try {
-		nio::ip::v4::server srv(nio::ip::v4::addr(IP, PORT));
+		nio::ip::v6::server srv(nio::ip::v6::addr(IP, PORT));
 
 		srv.create();
 		srv.set_opt(nio::option::REUSE_ADDRESS, &nio::ENABLE);
@@ -26,13 +26,13 @@ TEST_CASE("nio::ip::v4::server tests", "[nio]") {
 		srv.bind();
 		srv.listen();
 
-		nio::ip::v4::stream stream;
+		nio::ip::v6::stream stream;
 		stream = srv.accept();
 
 		std::cout << "Peer: " << stream.peer().ip() << ":"
 				  << stream.peer().port() << "\n";
 
-		REQUIRE(stream.peer().ip() == "127.0.0.1");
+		REQUIRE(stream.peer().ip() == "::1");
 
 		const char* testdata = "abcdefg\n\r\b\a!DSFDSW23423";
 
