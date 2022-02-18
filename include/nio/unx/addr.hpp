@@ -12,8 +12,7 @@ namespace nio {
 	namespace unx {
 		class addr final : public base::addr<sockaddr_un> {
 			public:
-			addr() {
-			}
+			addr();
 
 			/**
 			 * @brief Create a new UNIX socket address.

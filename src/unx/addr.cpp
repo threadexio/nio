@@ -4,6 +4,11 @@
 
 namespace nio {
 	namespace unx {
+		addr::addr() {
+			memset(&saddr, 0, slen);
+			saddr.sun_family = AF_UNIX;
+		}
+
 		addr::addr(const std::string& _path) {
 			memset(&saddr, 0, sizeof(saddr));
 
