@@ -25,7 +25,7 @@ namespace nio {
 			}
 
 			void addr::ip(const std::string& _ip) {
-				switch (inet_pton(AF_INET6, _ip.c_str(), &saddr.sin_addr)) {
+				switch (inet_pton(AF_INET, _ip.c_str(), &saddr.sin_addr)) {
 					case 1:
 						break;
 
