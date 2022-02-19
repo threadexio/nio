@@ -20,13 +20,21 @@ namespace nio {
 				char _ip[INET_ADDRSTRLEN] = {0};
 				if (inet_ntop(AF_INET, &saddr.sin_addr, _ip, INET_ADDRSTRLEN) ==
 					NULL)
-					NIO_THROW_ERROR(error);
+					NIO_THROW_ERROR_CUSTOM(error, EFAULT, "Bad address");
 				return _ip;
 			}
 
 			void addr::ip(const std::string& _ip) {
-				if (inet_pton(AF_INET, _ip.c_str(), &saddr.sin_addr) != 1)
-					NIO_THROW_ERROR(error);
+				switch (inet_pton(AF_INET6, _ip.c_str(), &saddr.sin_addr)) {
+					case 1:
+						break;
+
+					case 0:
+						NIO_THROW_ERROR_CUSTOM(error, EFAULT, "Bad address");
+
+					default:
+						NIO_THROW_ERROR(error);
+				}
 			}
 		} // namespace v4
 	}	  // namespace ip

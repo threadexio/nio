@@ -24,7 +24,7 @@ namespace nio {
 				if (inet_ntop(
 						AF_INET6, &saddr.sin6_addr, _ip, INET6_ADDRSTRLEN) ==
 					NULL)
-					NIO_THROW_ERROR(error);
+					NIO_THROW_ERROR_CUSTOM(error, EFAULT, "Bad address");
 				return _ip;
 			}
 
@@ -48,8 +48,7 @@ namespace nio {
 						break;
 
 					case 0:
-						NIO_THROW_ERROR_CUSTOM(
-							error, EFAULT, "Bad address format");
+						NIO_THROW_ERROR_CUSTOM(error, EFAULT, "Bad address");
 
 					default:
 						NIO_THROW_ERROR(error);
