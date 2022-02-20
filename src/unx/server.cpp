@@ -35,6 +35,7 @@ namespace nio {
 		}
 
 		void server::bind() {
+			unlink(srv.path().c_str());
 			if (::bind(sock, srv, srv) < 0)
 				NIO_THROW_ERROR(error);
 		}
