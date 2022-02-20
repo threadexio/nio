@@ -34,8 +34,8 @@ namespace nio {
 				apparently this doesn't work otherwise. For the record I have
 				spent about an hour trying to understand why it didn't work.
 				*/
-				char		  buf[INET6_ADDRSTRLEN];
-				unsigned char i = 0;
+				char		  buf[INET6_ADDRSTRLEN] = {0};
+				unsigned char i						= 0;
 				for (auto c : _ip) {
 					if (c >= 'A' && c <= 'Z')
 						c = c - ('Z' - 'z');
