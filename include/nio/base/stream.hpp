@@ -12,6 +12,26 @@ namespace nio {
 
 		class _stream : public _sock {
 			public:
+			_stream() {
+			}
+
+			_stream(const _stream&) = delete;
+
+			_stream(_stream&& other) noexcept {
+				sock	   = other.sock;
+				other.sock = -1;
+			}
+
+			_stream& operator=(_stream&& other) noexcept {
+				if (this == &other)
+					return *this;
+
+				close();
+				sock	   = other.sock;
+				other.sock = -1;
+				return *this;
+			}
+
 			/**
 			 * @brief Read from the stream _size bytes.
 			 *
