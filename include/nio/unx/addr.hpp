@@ -14,7 +14,7 @@ namespace nio {
 			public:
 			addr() {
 				memset(&saddr, 0, slen);
-				saddr.sun_family = AF_UNIX;
+				saddr.sun_family = AF_LOCAL;
 			}
 
 			/**
@@ -24,8 +24,7 @@ namespace nio {
 			 */
 			addr(const std::string& _path) {
 				memset(&saddr, 0, sizeof(saddr));
-
-				saddr.sun_family = AF_UNIX;
+				saddr.sun_family = AF_LOCAL;
 
 				strncpy(
 					saddr.sun_path, _path.c_str(), sizeof(saddr.sun_path) - 1);

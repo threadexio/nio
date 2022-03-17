@@ -26,8 +26,8 @@ namespace nio {
 			 * @brief Create the client socket.
 			 *
 			 */
-			void create(protocol prot = protocol::STREAM) {
-				sock = socket(AF_UNIX, static_cast<int>(prot), 0);
+			void create() {
+				sock = socket(AF_UNIX, SOCK_STREAM, 0);
 				if (sock < 0)
 					NIO_THROW_ERROR(error);
 			}

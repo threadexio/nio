@@ -10,38 +10,32 @@
 
 namespace nio {
 
-	enum class protocol {
-		STREAM	 = SOCK_STREAM,
-		DATAGRAM = SOCK_DGRAM,
-		RAW		 = SOCK_RAW
-	};
-
 	namespace base {
 		struct sock_opt {
 			int level;
 			int optname;
 			int len;
 		};
-	} // namespace base
 
-	static constexpr base::sock_opt _sopts[] = {
-		{SOL_SOCKET, SO_BROADCAST, sizeof(int)},
-		{SOL_SOCKET, SO_DEBUG, sizeof(int)},
-		{SOL_SOCKET, SO_DONTROUTE, sizeof(int)},
-		{SOL_SOCKET, SO_ERROR, sizeof(int)},
-		{SOL_SOCKET, SO_KEEPALIVE, sizeof(int)},
-		{SOL_SOCKET, SO_LINGER, sizeof(linger)},
-		{SOL_SOCKET, SO_OOBINLINE, sizeof(int)},
-		{SOL_SOCKET, SO_RCVBUF, sizeof(int)},
-		{SOL_SOCKET, SO_SNDBUF, sizeof(int)},
-		{SOL_SOCKET, SO_RCVLOWAT, sizeof(int)},
-		{SOL_SOCKET, SO_SNDLOWAT, sizeof(int)},
-		{SOL_SOCKET, SO_RCVTIMEO, sizeof(timeval)},
-		{SOL_SOCKET, SO_SNDTIMEO, sizeof(timeval)},
-		{SOL_SOCKET, SO_REUSEADDR, sizeof(int)},
-		{SOL_SOCKET, SO_REUSEPORT, sizeof(int)},
-		{SOL_SOCKET, SO_TYPE, sizeof(int)},
-	};
+		static constexpr base::sock_opt _sopts[] = {
+			{SOL_SOCKET, SO_BROADCAST, sizeof(int)},
+			{SOL_SOCKET, SO_DEBUG, sizeof(int)},
+			{SOL_SOCKET, SO_DONTROUTE, sizeof(int)},
+			{SOL_SOCKET, SO_ERROR, sizeof(int)},
+			{SOL_SOCKET, SO_KEEPALIVE, sizeof(int)},
+			{SOL_SOCKET, SO_LINGER, sizeof(linger)},
+			{SOL_SOCKET, SO_OOBINLINE, sizeof(int)},
+			{SOL_SOCKET, SO_RCVBUF, sizeof(int)},
+			{SOL_SOCKET, SO_SNDBUF, sizeof(int)},
+			{SOL_SOCKET, SO_RCVLOWAT, sizeof(int)},
+			{SOL_SOCKET, SO_SNDLOWAT, sizeof(int)},
+			{SOL_SOCKET, SO_RCVTIMEO, sizeof(timeval)},
+			{SOL_SOCKET, SO_SNDTIMEO, sizeof(timeval)},
+			{SOL_SOCKET, SO_REUSEADDR, sizeof(int)},
+			{SOL_SOCKET, SO_REUSEPORT, sizeof(int)},
+			{SOL_SOCKET, SO_TYPE, sizeof(int)},
+		};
+	} // namespace base
 
 	// Index of _sopts. Do not change the order.
 	enum class option {

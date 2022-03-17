@@ -37,7 +37,7 @@ namespace nio {
 			 * @brief Create the client socket.
 			 *
 			 */
-			virtual void create(protocol prot = protocol::STREAM) = 0;
+			virtual void create() = 0;
 
 			/**
 			 * @brief Connect to a remote endpoint.

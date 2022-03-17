@@ -38,7 +38,7 @@ namespace nio {
 			 * @brief Create the server socket.
 			 *
 			 */
-			virtual void create(protocol prot = protocol::STREAM) = 0;
+			virtual void create() = 0;
 
 			/**
 			 * @brief Bind to the server address.
