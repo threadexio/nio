@@ -8,5 +8,5 @@ namespace nio {
 	 * @brief A type representing all connection streams.
 	 *
 	 */
-	using stream = base::_stream;
+	using stream = base::stream;
 } // namespace nio

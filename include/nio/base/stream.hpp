@@ -10,19 +10,20 @@
 namespace nio {
 	namespace base {
 
-		class _stream : public _sock {
+		class stream : public _sock {
 			public:
-			_stream() {
+			stream() {
 			}
 
-			_stream(const _stream&) = delete;
+			stream(const stream&) = delete;
 
-			_stream(_stream&& other) noexcept {
+			stream(stream&& other) noexcept {
+				close();
 				sock	   = other.sock;
 				other.sock = -1;
 			}
 
-			_stream& operator=(_stream&& other) noexcept {
+			stream& operator=(stream&& other) noexcept {
 				if (this == &other)
 					return *this;
 
@@ -64,53 +65,10 @@ namespace nio {
 				return written_bytes;
 			}
 
-			inline _stream& operator<<(const char* _data) {
+			inline stream& operator<<(const char* _data) {
 				write(_data, strlen(_data));
 				return *this;
 			}
-		};
-
-		/**
-		 * @brief Base class for any stream
-		 *
-		 * @tparam T Type of the corresponding addr class
-		 */
-		template <class T>
-		class stream : public _stream {
-			public:
-			stream() {
-			}
-
-			stream(const stream&) = delete;
-
-			stream(stream&& other) noexcept {
-				sock	   = other.sock;
-				_peer	   = other._peer;
-				other.sock = -1;
-			}
-
-			stream& operator=(stream&& other) noexcept {
-				if (this == &other)
-					return *this;
-
-				close();
-				sock	   = other.sock;
-				_peer	   = other._peer;
-				other.sock = -1;
-				return *this;
-			}
-
-			/**
-			 * @brief Get the address of the remote peer.
-			 *
-			 * @return const T&
-			 */
-			inline const T& peer() const {
-				return _peer;
-			};
-
-			protected:
-			T _peer;
 		};
 	} // namespace base
 } // namespace nio

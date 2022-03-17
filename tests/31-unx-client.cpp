@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "nio/stream.hpp"
+#include "nio/types.hpp"
 #include "nio/unx/client.hpp"
 
 #define PATH "/tmp/test.sock"
@@ -14,10 +14,6 @@ TEST_CASE("nio::unx::client tests", "[nio]") {
 
 		nio::unx::stream stream;
 		stream = cli.connect();
-
-		std::cout << "Server: " << stream.peer().path() << "\n";
-
-		REQUIRE(stream.peer().path() == PATH);
 
 		const char* testdata = "abcdefg\n\r\b\a!DSFDSW23423";
 

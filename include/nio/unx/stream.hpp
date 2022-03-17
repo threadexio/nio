@@ -9,7 +9,7 @@ namespace nio {
 		 * @brief An unix connection stream. Do not use this directly,
 		 * unless absolutely needed.
 		 */
-		class stream final : public base::stream<addr> {
+		class stream final : public base::stream {
 			public:
 			stream() {
 			}
@@ -20,9 +20,8 @@ namespace nio {
 			 * @param _sock The underlying socket file descriptor
 			 * @param _p The peer address
 			 */
-			stream(int _sock, const addr& _p) {
-				_peer = _p;
-				sock  = _sock;
+			stream(int _sock) {
+				sock = _sock;
 			}
 		};
 	} // namespace unx

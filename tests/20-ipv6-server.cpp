@@ -2,7 +2,7 @@
 
 #include "catch.hpp"
 #include "nio/ip/v6/server.hpp"
-#include "nio/stream.hpp"
+#include "nio/types.hpp"
 
 #define IP	 "::1"
 #define PORT 8888

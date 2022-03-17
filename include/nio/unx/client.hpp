@@ -38,14 +38,10 @@ namespace nio {
 			 * @return stream - The new connection stream
 			 */
 			stream connect() {
-				addr peer;
-
 				if (::connect(sock, remote, remote) < 0)
 					NIO_THROW_ERROR(error);
 
-				peer = remote;
-
-				return stream(sock, peer);
+				return stream(sock);
 			}
 		};
 	} // namespace unx

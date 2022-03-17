@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "nio/stream.hpp"
+#include "nio/types.hpp"
 #include "nio/unx/server.hpp"
 
 #define PATH "/tmp/test.sock"

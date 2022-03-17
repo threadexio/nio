@@ -78,7 +78,7 @@ namespace nio {
 				if (new_stream < 0)
 					NIO_THROW_ERROR(error);
 
-				return stream(new_stream, peer);
+				return stream(new_stream);
 			}
 		};
 	} // namespace unx

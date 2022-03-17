@@ -39,15 +39,10 @@ namespace nio {
 				 * @return stream - The new connection stream
 				 */
 				stream connect() {
-					addr peer;
-
 					if (::connect(sock, remote, remote) < 0)
 						NIO_THROW_ERROR(error);
 
-					if (getpeername(sock, peer, peer) < 0)
-						NIO_THROW_ERROR(error);
-
-					return stream(sock, peer);
+					return stream(sock);
 				}
 			};
 		} // namespace v6

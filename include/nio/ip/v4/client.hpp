@@ -47,7 +47,7 @@ namespace nio {
 					if (getpeername(sock, peer, peer) < 0)
 						NIO_THROW_ERROR(error);
 
-					return stream(sock, peer);
+					return stream(sock);
 				}
 			};
 		} // namespace v4
