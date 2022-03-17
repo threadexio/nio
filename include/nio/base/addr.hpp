@@ -17,6 +17,8 @@ namespace nio {
 		template <class T>
 		class addr {
 			public:
+			virtual std::string to_string() const = 0;
+
 			inline operator socklen_t() {
 				return slen;
 			}

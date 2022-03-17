@@ -21,7 +21,10 @@ namespace nio {
 				 * @param _sock The underlying socket file descriptor
 				 * @param _p The peer address
 				 */
-				stream(int _sock, const addr& _p);
+				stream(int _sock, const addr& _p) {
+					_peer = _p;
+					sock  = _sock;
+				}
 			};
 		} // namespace v4
 	}	  // namespace ip

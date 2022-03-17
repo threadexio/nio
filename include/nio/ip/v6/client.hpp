@@ -19,20 +19,36 @@ namespace nio {
 				 *
 				 * @param _remote
 				 */
-				client(const addr& _remote);
+				client(const addr& _remote) {
+					remote = _remote;
+				}
 
 				/**
 				 * @brief Create the client socket.
 				 *
 				 */
-				void create(protocol prot = protocol::STREAM);
+				void create(protocol prot = protocol::STREAM) {
+					sock = socket(AF_INET6, static_cast<int>(prot), 0);
+					if (sock < 0)
+						NIO_THROW_ERROR(error);
+				}
 
 				/**
 				 * @brief Connect to the endpoint specified.
 				 *
 				 * @return stream - The new connection stream
 				 */
-				stream connect();
+				stream connect() {
+					addr peer;
+
+					if (::connect(sock, remote, remote) < 0)
+						NIO_THROW_ERROR(error);
+
+					if (getpeername(sock, peer, peer) < 0)
+						NIO_THROW_ERROR(error);
+
+					return stream(sock, peer);
+				}
 			};
 		} // namespace v6
 	}	  // namespace ip

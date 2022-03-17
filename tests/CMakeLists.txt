@@ -16,5 +16,6 @@ add_library(NioCatchMain OBJECT ${CATCH_MAIN_SRC})
 
 foreach(target ${TEST_TARGETS})
 	add_executable(${target} ${target}.cpp)
-	target_link_libraries(${target} NioCatchMain NioStatic)
+	target_link_libraries(${target} NioCatchMain)
+	target_include_directories(${target} PRIVATE ../include)
 endforeach()
