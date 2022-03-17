@@ -2,6 +2,7 @@ set(CATCH_MAIN_SRC main.cpp)
 
 set (TEST_TARGETS
 	00-error
+	01-addrinfo
 	10-ipv4-server
 	11-ipv4-client
 	20-ipv6-server

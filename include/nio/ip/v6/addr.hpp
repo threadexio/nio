@@ -1,11 +1,8 @@
 #pragma once
 
-#include <arpa/inet.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <sys/socket.h>
+#include <netdb.h>
 
-#include <string>
+#include <vector>
 
 #include "nio/base/addr.hpp"
 
@@ -113,7 +110,36 @@ namespace nio {
 				inline operator sockaddr_in6*() noexcept {
 					return &saddr;
 				}
+
+				friend inline std::vector<v6::addr> resolve(const std::string&,
+															int);
 			};
+
+			inline std::vector<v6::addr> resolve(const std::string& name,
+												 int _flags = 0) {
+				std::vector<v6::addr> ret;
+
+				v6::addr a;
+				addrinfo hints;
+				memset(&hints, 0, sizeof(hints));
+				hints.ai_family	  = a.saddr.sin6_family;
+				hints.ai_socktype = SOCK_STREAM;
+				hints.ai_flags	  = _flags;
+
+				addrinfo* res;
+				if (getaddrinfo(name.c_str(), nullptr, &hints, &res) < 0)
+					NIO_THROW_ERROR_CUSTOM(error, errno, gai_strerror(errno));
+
+				for (addrinfo* rp = res; rp != nullptr; rp = rp->ai_next) {
+					a.saddr = *(decltype(v6::addr::saddr)*)rp->ai_addr;
+
+					ret.push_back(a);
+				}
+
+				freeaddrinfo(res);
+
+				return ret;
+			}
 		} // namespace v6
 	}	  // namespace ip
 } // namespace nio
