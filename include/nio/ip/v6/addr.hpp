@@ -111,15 +111,22 @@ namespace nio {
 					return &saddr;
 				}
 
-				friend inline std::vector<v6::addr> resolve(const std::string&,
-															int);
+				friend inline std::vector<addr> resolve(const std::string&,
+														int);
 			};
 
-			inline std::vector<v6::addr> resolve(const std::string& name,
-												 int _flags = 0) {
-				std::vector<v6::addr> ret;
+			/**
+			 * @brief Resolve a domain name to one or more IPv6 addresses
+			 *
+			 * @param name Domain name
+			 * @param _flags Special `getaddrinfo()` flags
+			 * @return std::vector<nio::ip::v6::addr> - Returned addresses
+			 */
+			inline std::vector<addr> resolve(const std::string& name,
+											 int				_flags = 0) {
+				std::vector<addr> ret;
 
-				v6::addr a;
+				addr	 a;
 				addrinfo hints;
 				memset(&hints, 0, sizeof(hints));
 				hints.ai_family	  = a.saddr.sin6_family;
@@ -131,7 +138,7 @@ namespace nio {
 					NIO_THROW_ERROR_CUSTOM(error, errno, gai_strerror(errno));
 
 				for (addrinfo* rp = res; rp != nullptr; rp = rp->ai_next) {
-					a.saddr = *(decltype(v6::addr::saddr)*)rp->ai_addr;
+					a.saddr = *(decltype(addr::saddr)*)rp->ai_addr;
 
 					ret.push_back(a);
 				}
